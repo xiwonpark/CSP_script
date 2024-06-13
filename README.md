@@ -1,11 +1,13 @@
 # CSP_script
 
-## 반복문을 사용 한 process 병렬 처리
+## 반복문을 통한 process 병렬 처리 제어 방법
 1. cli script 적용 대상 list file 저장
 2. parameter별 값이 상수인 경우 cli script 내에 작성하고 변수인 경우 변수 처리
 3. 반복문을 통해 list file -> cli script 치환 및 검증/적용
 
 ### list file 작성
+구분자 -> 공백
+구분자가 공백이 아닌 경우 awk -F 옵션을 통해 구분자 지정
 ```
 # cat list
 i-test001 10.0.0.21
@@ -14,6 +16,7 @@ i-test003 10.0.0.23
 ```
 
 ### cli script 작성
+parameter별 상수인 값(subnet-id, image-id 등등)은 작성하고 변수인 값(instance name, private IP 등)은 변수 처리
 ```
 # cat create_instance
 # https://docs.aws.amazon.com/cli/latest/reference/ec2/run-instances.html
@@ -32,11 +35,13 @@ aws ec2 run-instances \
 ```
 
 ### for문 검증
+변수 치환이 된 script_out 파일 확인을 통해 치환이 제대로 이루어 졌는지 확인
 ```
 # for I_NAME in `cat list |awk '{print $1}'`;
 do PVIP=`cat list |grep $I_NAME |awk '{print $2}'`;
 cat create_instance |sed "s/NAME/$I_NAME/g" |sed "s/PVIP/$IP/g" > ./script_out;
 cat ./script_out;
+echo '';
 done;
 ```
 
