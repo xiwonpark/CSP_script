@@ -1,0 +1,9 @@
+# https://docs.aws.amazon.com/linux/al2/ug/amazon-linux-cloud-init.html
+# 부트 스트랩 - /var/lib/cloud 아래 저장 되었다가 바로 실행 됨
+
+#cloud-boothook
+#!/bin/csh
+hostnamectl set-hostname NAME
+foreach cpunum (`cat /sys/devices/system/cpu/cpu*/topology/thread_siblings_list | cut -s -d, -f2- | tr ‘,' '\’ | sort -un`)
+echo 0 > /sys/devices/system/cpu/cpu$cpunum/online 
+end

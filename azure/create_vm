@@ -1,0 +1,20 @@
+# https://learn.microsoft.com/ko-kr/cli/azure/vm?view=azure-cli-latest#az-vm-create
+# vm 생성
+az vm create -n NAME \ 
+-g RESOURCE_GROUP \ 
+--image IMAGE \ 
+--admin-username USER_NAME \ 
+--nsg NSG_NAME \ 
+--subnet SUBNET_NAME \ 
+--private-ip-address IP \ 
+--nic-delete-option 'delete' \
+--os-disk-delete-option 'delete' \
+--public-ip-address "" \ 
+--size VM_SIZE \ 
+--os-disk-encryption-set DISK_ENCRTYPTION_SET_NAME \ 
+--plan-publisher PUBLISHER \ 
+--plan-product PRODUCT \ 
+--accesslerated-networking true \ 
+--license-type LICENSE_TYPE \ 
+--tags key[=value] [key[=value] ...] \ 
+--no-wait

@@ -1,0 +1,6 @@
+# https://learn.microsoft.com/ko-kr/cli/azure/vm?view=azure-cli-latest#az-vm-delete
+# vm 제거
+az vm delete -g RESOURCE_GROUP \
+-n VM_NAME \
+--yes \
+--no-wait

@@ -1,0 +1,3 @@
+# https://docs.aws.amazon.com/cli/latest/reference/ec2/terminate-instances.html
+# 인스턴스 종료
+aws ec2 terminate-instances --instance-id ID
