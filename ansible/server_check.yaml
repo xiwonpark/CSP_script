@@ -1,0 +1,63 @@
+- name: Check RHEL and Kernel Version
+  hosts: TARGET_HOST_GROUP
+  tasks:
+    - name: Get RHEL Version
+      command: cat /etc/redhat-release
+      register: rhel_version
+
+    - name: Get Kernel Version
+      command: uname -r
+      register: kernel_version
+
+    - name: Print RHEL and Kernel Version
+      debug:
+        msg: "{{ rhel_version.stdout }}, {{ kernel_version.stdout }}"
+
+    - name: Check RHEL and Kernel Version
+      set_fact:
+        is_version_mismatch: "{{ (rhel_version.stdout != 'EXPECTED_RHEL_VERSION') or (kernel_version.stdout != 'EXPECTED_KERNEL_VERSION') }}"
+
+    - name: Write Version Mismatch Hostname
+      delegate_to: localhost
+      when: is_version_mismatch
+      shell: "echo '{{ ansible_hostname }} {{ ansible_date_time.date }} {{ ansible_date_time.time }} - Version is mismatched. Version: {{ rhel_version.stdout }}, {{ kernel_version.stdout }}' >> ./server_check.log"
+      
+- name: Check Number of Cores
+  hosts: TARGET_HOST_GROUP
+  tasks:
+    - name: Get Core Info
+      shell: "nproc"
+      register: core_num
+
+    - name: Print Number of Cores
+      debug:
+        msg: "Number of cores : {{ core_num.stdout }}"
+
+    - name: Check Number of Cores
+      set_fact:
+        is_core_mismatch: "{{ core_num.stdout != 'EXPECTED_CORE_NUM' }}"
+
+    - name: Write Core Mismatch Hostname
+      delegate_to: localhost
+      when: is_core_mismatch
+      shell: "echo '{{ ansible_hostname }} {{ ansible_date_time.date }} {{ ansible_date_time.time }} - The number of cores is mismatched. Core: {{ core_num.stdout }}' >> ./server_check.log"
+      
+- name: Check NFS Mounted
+  hosts: TARGET_HOST_GROUP
+  tasks:
+    - name: Get Mount Info
+      shell: "df | grep EXPECTED_MOUNT_DIR | awk '{print $6}'"
+      register: mount_dir
+
+    - name: Print NFS Mount
+      debug:
+        msg: "Mount Info : {{ mount_dir.stdout }}"
+
+    - name: Check Mount Info
+      set_fact:
+        is_mount_failed: "{{ mount_dir.stdout != 'EXPECTED_MOUNT_DIR' }}"
+
+    - name: Write Mount Fail Hostname
+      delegate_to: localhost
+      when: is_mount_failed
+      shell: "echo '{{ ansible_hostname }} {{ ansible_date_time.date }} {{ ansible_date_time.time }} - The mount state is wrong.' >> ./server_check.log"

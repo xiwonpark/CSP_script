@@ -1,0 +1,23 @@
+- name: Check RHEL and Kernel Version
+  hosts: TARGET_HOST_GROUP
+  tasks:
+    - name: Get RHEL Version
+      command: cat /etc/redhat-release
+      register: rhel_version
+
+    - name: Get Kernel Version
+      command: uname -r
+      register: kernel_version
+
+    - name: Print RHEL and Kernel Version
+      debug:
+        msg: "{{ rhel_version.stdout }}, {{ kernel_version.stdout }}"
+    
+    - name: Check RHEL and Kernel Version
+      set_fact:
+        is_version_mismatch: "{{ (rhel_version.stdout != 'EXPECTED_RHEL_VERSION') or (kernel_version.stdout != 'EXPECTED_KERNEL_VERSION') }}"
+
+    - name: Write Version Mismatch Hostname
+      delegate_to: localhost
+      when: is_version_mismatch
+      shell: "echo '{{ ansible_hostname }} {{ ansible_date_time.date }} {{ ansible_date_time.time }} - Version: {{ rhel_version.stdout }}, {{ kernel_version.stdout }}' >> ./version_mismatch.log"

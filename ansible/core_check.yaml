@@ -1,0 +1,19 @@
+- name: Check Number of Cores 
+  hosts: TARGET_HOST_GROUP
+  tasks:
+    - name: Get Core Info
+      command: "nproc"
+      register: core_num
+
+    - name: Print Number of Cores
+      debug:
+        msg: "Number of cores : {{ core_num.stdout }}"
+
+    - name: Check Number of Cores
+      set_fact:
+        is_core_mismatch: "{{ core_num.stdout != 'EXPECTED_CORE_NUM' }}"
+
+    - name: Write Core Mismatch Hostname
+      delegate_to: localhost
+      when: is_core_mismatch
+      shell: "echo '{{ ansible_hostname }} {{ ansible_date_time.date }} {{ ansible_date_time.time }} - Core: {{ core_num.stdout }}' >> ./core_mismatch.log"

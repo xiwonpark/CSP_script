@@ -1,0 +1,19 @@
+- name: Check NFS Mounted 
+  hosts: TARGET_HOST_GROUP
+  tasks:
+    - name: Get Mount Info
+      shell: "df | grep EXPECTED_MOUNT_DIR | awk '{print $6}'"
+      register: mount_dir
+
+    - name: Print NFS Mount
+      debug:
+        msg: "Mount OK : {{ mount_dir.stdout }}"
+
+    - name: Check Mount Info
+      set_fact:
+        is_mount_failed: "{{ mount_dir.stdout != 'EXPECTED_MOUNT_DIR' }}"
+
+    - name: Write Mount Fail Hostname
+      delegate_to: localhost
+      when: is_mount_failed
+      shell: "echo '{{ ansible_hostname }} {{ ansible_date_time.date }} {{ ansible_date_time.time }}' >> ./mount_failed.log"
