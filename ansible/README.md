@@ -1,8 +1,8 @@
 # Ansible 활용 방법
 
-## File
+## 📝 File
 
-### ansible.cfg
+### 1. ansible.cfg
 * 별도의 디렉토리마다 config 파일 생성 가능
   * ansible 명령어를 수행하는 현재 디렉토리의 ansible.cfg 파일을 우선으로 읽음
   * 현재 디렉토리에 ansible.cfg 파일이 없다면, /etc/ansible/ansible.cfg 를 default로 참조
@@ -21,7 +21,7 @@ become_ask_pass=False #remote_user가 sudo 명령어 사용을 위해 password�
 ```
 
 
-### inventory
+### 2. inventory
 * 원격서버로 사용할 서버들을 INI 파일 형식으로 작성
   * 호스트 그룹으로 그룹화 가능
   * 정규표현식과 같이 [0001:0100] 등의 syntax 사용 가능
@@ -45,7 +45,7 @@ o****[0001:100]
 ```
 * ```$ ansible-inventory --graph``` 명령어를 통해 현재 참조하는 인벤토리와 호스트 그룹별 서버 목록 확인 가능
 
-### Playbook
+### 3. Playbook
 * ansible 모듈을 통한 task를 스크립트로 작성한 파일
 * 예시)
 ```
@@ -64,7 +64,7 @@ o****[0001:100]
 ```
   * remote_user의 권한 중요
 
-## Command
+## ⌨️ Command
 * -k 옵션 사용 시 password를 통해 ssh 인증 가능
   * password는 ansible.cfg의 remote_user의 원격 서버 password
 * ```$ ansible-inventory --graph```
@@ -73,8 +73,9 @@ o****[0001:100]
   * playbook 스크립트 실행
 * ```$ ansible {my_target_host} -m {ad_hoc_module} -u {my_user_name} ```
   * 모듈을 통한 간단한 명령 가능 (ex. ping)
+---
 
-# 서버 검증 스크립트 활용 방법
+# 🖥️ 서버 검증 스크립트 활용 방법
 
 ## EXAMPLE - 재배포 서버 통합 점검
 * 가정 상황 : TOSS 인시던트를 통해 wstest0251 ~ wstest0300 서버 OS 7.9 → 8.6 업데이트 및 H/T off 요청 수신
