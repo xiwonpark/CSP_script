@@ -1,5 +1,6 @@
 - name: Server Ping Check
-  hosts: [TARGET_HOST_GROUP]
+  hosts: TARGET_HOST_GROUP
+  gather_facts: no
   tasks:
   - name: simple ping check
     ping:
