@@ -94,7 +94,7 @@ ping_check.yaml 플레이북을 실행한 뒤, 마지막 결과 요약(PLAY RECA
   * 재배포 완료 시점에서 서버 통합 검증 Playbook 활용
 
 ### 작업 환경으로 이동 (DS Confluence내 가이드 문서 참조)
-* ```$ ssh p*k*0022```
+* ```$ ssh p*k*0**2```
   * Ansible 컨트롤 서버에 접속
 * ```$ cd /user/cloudtest/USERS/ys***ng/workspace/ansible-validation (검증 작업 디렉토리)```
   * 작업 디렉토리로 이동
