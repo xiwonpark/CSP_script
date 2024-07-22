@@ -10,6 +10,7 @@
 [defaults]
 inventory = ./inventory #사용할 inventory 파일 경로
 host_key_checking = False #호스트 키 확인 비활성화
+ask_pass = True #비밀번호 입력란 표시 (-k 옵션과 동일)
 remote_user = ca*v12*** #원격 서버에 접속하는 username
 
 # remote_user가 sudo 권한을 상속받기 위한 설정
@@ -74,6 +75,17 @@ o****[0001:100]
 * ```$ ansible {my_target_host} -m {ad_hoc_module} -u {my_user_name} ```
   * 모듈을 통한 간단한 명령 가능 (ex. ping)
 ---
+# ✅ 서버 모니터링
+ping_check.yaml 플레이북을 실행한 뒤, 마지막 결과 요약(PLAY RECAP)을 보는 방식으로 간단하게 SSH 접속 점검 가능
+* ping_check.yaml
+```
+- name: Server Ping Check
+  hosts: TARGET_HOST_GROUP
+  gather_facts: no  #해당 옵션을 통해 원격 서버에서 필요한 정보를 가져오는 시간을 줄여 빠르게 SSH 접속만 검증 가능
+  tasks:
+  - name: simple ping check
+    ping:
+```
 
 # 🖥️ 서버 검증 스크립트 활용 방법
 
@@ -84,7 +96,7 @@ o****[0001:100]
 ### 작업 환경으로 이동 (DS Confluence내 가이드 문서 참조)
 * ```$ ssh p*k*0022```
   * Ansible 컨트롤 서버에 접속
-* ```$ cd /user/cloudtest/USERS/ys***ng/workspace/ansible-validation (내부 환경에 생성 예정)```
+* ```$ cd /user/cloudtest/USERS/ys***ng/workspace/ansible-validation (검증 작업 디렉토리)```
   * 작업 디렉토리로 이동
 
 ### ansible.cfg 수정 및 확인
