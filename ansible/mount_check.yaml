@@ -16,4 +16,4 @@
     - name: Write Mount Fail Hostname
       delegate_to: localhost
       when: is_mount_failed
-      shell: "echo '{{ ansible_hostname }} {{ ansible_date_time.date }} {{ ansible_date_time.time }}' >> ./mount_failed.log"
+      shell: "echo '{{ ansible_hostname }} {{ ansible_date_time.date }} {{ ansible_date_time.time }}' >> log/mount_failed.log"

@@ -20,7 +20,7 @@
     - name: Write Version Mismatch Hostname
       delegate_to: localhost
       when: is_version_mismatch
-      shell: "echo '{{ ansible_hostname }} {{ ansible_date_time.date }} {{ ansible_date_time.time }} - Version is mismatched. Version: {{ rhel_version.stdout }}, {{ kernel_version.stdout }}' >> ./server_check.log"
+      shell: "echo '{{ ansible_hostname }} {{ ansible_date_time.date }} {{ ansible_date_time.time }} - Version is mismatched. Version: {{ rhel_version.stdout }}, {{ kernel_version.stdout }}' >> log/server_check.log"
       
 - name: Check Number of Cores
   hosts: TARGET_HOST_GROUP
@@ -40,7 +40,7 @@
     - name: Write Core Mismatch Hostname
       delegate_to: localhost
       when: is_core_mismatch
-      shell: "echo '{{ ansible_hostname }} {{ ansible_date_time.date }} {{ ansible_date_time.time }} - The number of cores is mismatched. Core: {{ core_num.stdout }}' >> ./server_check.log"
+      shell: "echo '{{ ansible_hostname }} {{ ansible_date_time.date }} {{ ansible_date_time.time }} - The number of cores is mismatched. Core: {{ core_num.stdout }}' >> log/server_check.log"
       
 - name: Check NFS Mounted
   hosts: TARGET_HOST_GROUP
@@ -60,4 +60,4 @@
     - name: Write Mount Fail Hostname
       delegate_to: localhost
       when: is_mount_failed
-      shell: "echo '{{ ansible_hostname }} {{ ansible_date_time.date }} {{ ansible_date_time.time }} - The mount state is wrong.' >> ./server_check.log"
+      shell: "echo '{{ ansible_hostname }} {{ ansible_date_time.date }} {{ ansible_date_time.time }} - The mount state is wrong.' >> log/server_check.log"

@@ -16,4 +16,4 @@
     - name: Write Core Mismatch Hostname
       delegate_to: localhost
       when: is_core_mismatch
-      shell: "echo '{{ ansible_hostname }} {{ ansible_date_time.date }} {{ ansible_date_time.time }} - Core: {{ core_num.stdout }}' >> ./core_mismatch.log"
+      shell: "echo '{{ ansible_hostname }} {{ ansible_date_time.date }} {{ ansible_date_time.time }} - Core: {{ core_num.stdout }}' >> log/core_mismatch.log"

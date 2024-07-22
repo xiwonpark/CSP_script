@@ -20,4 +20,4 @@
     - name: Write Version Mismatch Hostname
       delegate_to: localhost
       when: is_version_mismatch
-      shell: "echo '{{ ansible_hostname }} {{ ansible_date_time.date }} {{ ansible_date_time.time }} - Version: {{ rhel_version.stdout }}, {{ kernel_version.stdout }}' >> ./version_mismatch.log"
+      shell: "echo '{{ ansible_hostname }} {{ ansible_date_time.date }} {{ ansible_date_time.time }} - Version: {{ rhel_version.stdout }}, {{ kernel_version.stdout }}' >> log/version_mismatch.log"
