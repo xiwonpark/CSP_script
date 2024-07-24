@@ -16,5 +16,5 @@ az vm create -n NAME \
 --plan-product PRODUCT \ 
 --accesslerated-networking true \ 
 --license-type LICENSE_TYPE \ 
---tags key[=value] [key[=value] ...] \ 
+--tags key[=value] [key[=value] ...] \ # HT OFF: platformsettings.host_environment.disablehyperthreading=[true|false]
 --no-wait
