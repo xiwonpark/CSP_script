@@ -20,7 +20,10 @@
     3. 반복문을 사용하여 배포전 검증
     4. 실행
 * 서버 점검
-    1. 추후 Ansible yml file 업데이트 예정
+    1. Ansible Master 서버 접속 및 디렉토리 이동
+    2. ansible.cfg / inventory / Playbook.yaml 파일 수정
+    3. Playbook 실행
+   * 참조 - [Ansible 프로세스 및 가이드](ansible/README.md)
 * H/T 옵션 변경
     1. 선번장 작성
     2.  
